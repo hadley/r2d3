@@ -1,0 +1,7 @@
+S3method(as.list,coord)
+S3method(as.list,facet)
+S3method(as.list,ggplot)
+S3method(as.list,proto)
+S3method(as.list,scale)
+export(json)
+import(rjson)
