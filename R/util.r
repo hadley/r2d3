@@ -20,3 +20,19 @@ name_matches <- function(x, pattern) {
   new_names <- gsub(pattern, "", names(x)[matches])
   setNames(x[matches], new_names)
 }
+
+
+
+inst_path <- function() {
+  envname <- environmentName(parent.env(environment()))
+  
+  if (envname == "r2d3") {
+    # Probably in package
+    system.file(package = "r2d3")
+  } else {
+    # Probably in development
+    srcref <- attr(inst_path, "srcref")
+    path <- dirname(dirname(attr(srcref, "srcfile")$filename))
+    file.path(path, "inst")
+  }
+}

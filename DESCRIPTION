@@ -10,10 +10,13 @@ Depends:
     ggplot2,
     digest
 Imports:
-    rjson
+    rjson,
+    Rook,
+    whisker
 License: AGPL
 Collate:
     'ggplot2.r'
     'util.r'
     'json.r'
     'r2d3.r'
+    'server.r'
