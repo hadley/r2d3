@@ -15,5 +15,6 @@
 \examples{
 p <- qplot(displ, hwy, data = mpg)
 r2d3(p, "mpg.json")
+r2d3(p + geom_smooth(), "mpg-smooth.json")
 }
 
