@@ -20,7 +20,6 @@
 #' @return (invisibly) the Rook server.
 #' @export
 #' @import Rook
-#' @importFrom tools file_path_sans_ext
 #' @examples
 #' start_server(system.file("examples", package = "r2d3"))
 start_server <- function(base, appname = "r2d3", browse = interactive()) {
@@ -61,7 +60,7 @@ make_router <- function(base) {
 
     # If it's an html file, and a json file with the same name exists,
     # serve the standard template
-    json_path <- paste0(file_path_sans_ext(path), ".json")
+    json_path <- change_ext(path, "json")
     if (file.exists(file.path(base, json_path))) {
       return(serve_scaffold(paste0(req$script_name(), json_path)))
     }
@@ -104,6 +103,9 @@ serve_scaffold <- function(path) {
 
 serve_index <- function(path) {
   files <- basename(dir(path))
+  json <- files[file_ext(files) == "json"]
+  files <- sort(c(files, change_ext(json, "html")))
+  
   serve_template("index.html", list(files = files))
 }
 
@@ -111,4 +113,9 @@ redirect <- function(path) {
   res <- Response$new(status = 301L)
   res$header("Location", path)
   res$finish()
+}
+
+#' @importFrom tools file_path_sans_ext
+change_ext <- function(x, new_ext) {
+  paste0(file_path_sans_ext(x), ".", new_ext)
 }
