@@ -63,7 +63,7 @@ make_router <- function(base) {
     # serve the standard template
     json_path <- paste0(file_path_sans_ext(path), ".json")
     if (file.exists(file.path(base, json_path))) {
-      return(serve_scaffold(json_path))
+      return(serve_scaffold(paste0(req$script_name(), json_path)))
     }
     
     # Couldn't find it, so return 404.
