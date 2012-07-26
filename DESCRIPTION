@@ -7,10 +7,13 @@ Maintainer: Hadley Wickham <h.wickham@gmail.com>
 Description: 
 Depends:
     R (>= 2.11.0),
-    ggplot2
+    ggplot2,
+    digest
 Imports:
     rjson
 License: AGPL
 Collate:
     'ggplot2.r'
     'util.r'
+    'json.r'
+    'r2d3.r'

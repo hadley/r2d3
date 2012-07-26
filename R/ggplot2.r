@@ -43,21 +43,20 @@ as.list.coord <- function(x, ...) {
 
 # At what point should I combine the aesthetics from the plot and the layer?
 # Or should this be something that the presentation layer can do?
-lay <- ggplot2:::Layer
-lay$as.list <- function(., ...) {
+#' @importFrom digest digest
+as.list.layer <- function(., ...) {
   list(
     geom = c(list(name = .$geom$objname), .$geom_params),
     stat = c(list(name = .$stat$objname), .$stat_params),
-    adj  = .$position$as.list(),
+    adj  = as.list.position(.$position),
     mapping = as.character(.$mapping),
     data = if (!is.null(.$data)) digest(.$data),
     show_guide = .$show_guide
   )
 }
 
-pos <- ggplot2:::Position
-pos$as.list <- function(., ...) {
-  compact(list(name = .$objname, width = .$width, height = .$height))
+as.list.position <- function(., ...) {
+  compact_rec(list(name = .$objname, width = .$width, height = .$height))
 }
 
 #' @S3method as.list ggplot
@@ -77,7 +76,7 @@ as.list.ggplot <- function(x, ...) {
   # Combine layers and data
   data <- built$data
   names(data) <- vapply(data, digest, character(1))
-  layers <- lapply(x$layers, as.list, ...)
+  layers <- lapply(x$layers, as.list.layer, ...)
   
   stopifnot(length(layers) == length(data))
   for (i in seq_along(data)) {
