@@ -8,7 +8,8 @@
 #' r2d3(p, "mpg.json")
 #' r2d3(p + geom_smooth(), "mpg-smooth.json")
 r2d3 <- function(x, path) {
-  # stopifnot(is.ggplot(x))
+  stopifnot(is.ggplot(x))
+  stopifnot(is.character(path), length(path) == 1)
   
   cat(json(x), file = path)
 }
